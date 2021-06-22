@@ -1,7 +1,7 @@
 import { createHash } from "crypto";
 import axios, { AxiosPromise } from "axios";
 import { format, parse } from "date-fns";
-import { CustomerSearchResult } from "./types";
+import { CustomerSearchResult, GetOrdersResult } from "./types";
 const md5 = (input: string) => {
   return createHash("md5").update(input).digest("hex");
 };
@@ -46,36 +46,28 @@ export class NhanhApi {
   version() {
     return "1.0";
   }
-  getOrders(fromDate: string, endDate: string) {
+  getOrders(
+    fromDate: string,
+    endDate: string,
+    page = 1,
+  ): AxiosPromise<GetOrdersResult> {
     const parsedFromDate = parse(fromDate, "yyyy-MM-dd", new Date());
     const parsedEndDate = parse(endDate, "yyyy-MM-dd", new Date());
     if (!parsedFromDate || !parsedEndDate) {
       throw Error("Invalid date passed");
     }
-    var allowedTrafficSourceNames = ["Facebook", "Instagram", "Shopee", "Zalo"];
-    var allowedStatusCodes = [
-      "54",
-      "57",
-      "55",
-      "56",
-      "68",
-      "73",
-      "42",
-      "43",
-      "59",
-      "60",
-    ];
 
     return this.__callAPI("/api/order/index", {
       fromDate: format(parsedFromDate, "yyyy-MM-dd"),
       toDate: format(parsedEndDate, "yyyy-MM-dd"),
-      page: 1,
-      statuses: allowedStatusCodes,
+      page,
     });
   }
   getCustomers(
     firstBoughtDate: string,
     lastBoughtDate: string,
+    page = 1,
+    perPage = 10,
   ): AxiosPromise<CustomerSearchResult> {
     const parsedFromDate = parse(firstBoughtDate, "yyyy-MM-dd", new Date());
     const parsedEndDate = parse(lastBoughtDate, "yyyy-MM-dd", new Date());
@@ -85,7 +77,16 @@ export class NhanhApi {
     return this.__callAPI("/api/customer/search", {
       fromLastBoughtDate: format(parsedFromDate, "yyyy-MM-dd"),
       toLastBoughtDate: format(parsedEndDate, "yyyy-MM-dd"),
-      page: 1,
+      page,
+      icpp: perPage,
+    });
+  }
+  getOrderById(id: number): AxiosPromise<GetOrdersResult> {
+    if (!id) {
+      throw Error("Please provide order id");
+    }
+    return this.__callAPI("/api/order/index", {
+      id,
     });
   }
 }

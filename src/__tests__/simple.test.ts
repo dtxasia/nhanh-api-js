@@ -25,3 +25,8 @@ test("API can call customer search", async () => {
     expect(customer.billList).toEqual(expect.any(Array));
   });
 });
+test("API can get order by id", async () => {
+  const resp = await client.getOrderById(106053278);
+  expect(resp.data.code).toBe(1);
+  console.log(JSON.stringify(resp.data));
+});
