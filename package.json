@@ -8,7 +8,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/service.js",
   "license": "MIT",
   "description": "Nhanh API in Javascript",
@@ -23,13 +23,12 @@
     "test": "jest --config jestconfig.json"
   },
   "dependencies": {
-    "date-fns": "^2.22.1",
-    "dotenv": "^10.0.0",
     "got": "^11.8.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "dotenv": "^10.0.0",
     "jest": "^27.0.4",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
