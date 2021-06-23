@@ -18,18 +18,19 @@
     "developers.nhanh.vn"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf ./lib && tsc",
     "test": "jest --config jestconfig.json"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "date-fns": "^2.22.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "got": "^11.8.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "jest": "^27.0.4",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.4"
   }
