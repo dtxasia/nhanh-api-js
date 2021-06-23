@@ -17,6 +17,7 @@
     "nhanh.vn",
     "developers.nhanh.vn"
   ],
+  "repository": "https://github.com/dtxasia/nhanh-api-js",
   "scripts": {
     "build": "rimraf ./lib && tsc",
     "prepublishOnly": "npm run test && npm run build",
