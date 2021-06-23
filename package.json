@@ -8,7 +8,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "lib/service.js",
   "license": "MIT",
   "description": "Nhanh API in Javascript",
@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "rimraf ./lib && tsc",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "jest --config jestconfig.json"
   },
   "dependencies": {
