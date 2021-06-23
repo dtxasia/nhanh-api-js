@@ -9,7 +9,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "version": "1.0.6",
-  "main": "lib/service.js",
+  "main": "lib/nhanh-api-client.js",
   "license": "MIT",
   "description": "Nhanh API in Javascript",
   "keywords": [
