@@ -1,5 +1,6 @@
 import { NhanhAPIClient } from "../nhanh-api-client";
 import * as dotenv from "dotenv";
+import { Shipping } from "../types/Shipping";
 dotenv.config();
 let client: NhanhAPIClient;
 beforeAll(() => {
@@ -38,5 +39,13 @@ test("API can call customer search", async () => {
 
 test("API can call bill search", async () => {
   const resp = await client.searchBill({});
+  expect(resp.body.code).toBe(1);
+});
+
+test("API can call shipping location", async () => {
+  const resp = await client.shippingLocation<Shipping.WardLocationData>({
+    type: "WARD",
+    parentId: 1033,
+  });
   expect(resp.body.code).toBe(1);
 });

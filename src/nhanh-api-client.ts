@@ -3,13 +3,19 @@ import { createHash } from "crypto";
 import { Bill } from "./types/bill";
 import { Customer } from "./types/customer";
 import { Order } from "./types/order";
+import { Shipping } from "./types/Shipping";
 const md5 = (input: string) => {
   return createHash("md5").update(input).digest("hex");
 };
+interface GenericResponse {
+  code: number;
+  data: any;
+  messages: string[];
+}
 export class NhanhAPIClient {
   apiUsername = "";
   apiKey = "";
-  storeId? = "";
+  storeId = "";
   baseUrl = "https://graph.nhanh.vn";
   constructor(
     apiUsername: string,
@@ -25,9 +31,9 @@ export class NhanhAPIClient {
     if (baseUrl) {
       this.baseUrl = baseUrl;
     }
-    this.storeId = storeId;
+    this.storeId = storeId ?? "";
   }
-  __callAPI<APIReq = any, APIRes = any>(
+  __callAPI<APIReq = any, APIRes = GenericResponse>(
     endpoint = "",
     data: APIReq,
   ): CancelableRequest<Response<APIRes>> {
@@ -39,7 +45,7 @@ export class NhanhAPIClient {
       apiUsername: this.apiUsername,
       data: dataStringified,
       checksum: checksum2,
-      storeId: "",
+      storeId: this.storeId,
     });
     return got(this.baseUrl + endpoint, {
       method: "POST",
@@ -78,5 +84,13 @@ export class NhanhAPIClient {
       "/api/bill/search",
       input,
     );
+  }
+  shippingLocation<T = Shipping.CityLocationData>(
+    input: Shipping.LocationInput,
+  ) {
+    return this.__callAPI<
+      Shipping.LocationInput,
+      Shipping.LocationResult & { data?: T[] }
+    >("/api/shipping/location", input);
   }
 }
