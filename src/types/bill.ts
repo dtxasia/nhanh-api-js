@@ -59,7 +59,7 @@ export namespace Bill {
   }
 
   export interface Product {
-    id: string;
+    id: number;
     code: string;
     name: string;
     quantity: number;
